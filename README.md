@@ -2,7 +2,7 @@
 <h3 align="center">QA / Test Automation Engineer · DevOps Enthusiast</h3>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=2EC4B6&center=true&vCenter=true&width=500&lines=Automating+the+boring+stuff...;Selenium+%2B+Java+%2B+TestNG;CI%2FCD+%7C+DevOps+%7C+Quality+Engineering" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&pause=1000&color=2EC4B6&center=true&vCenter=true&width=500&lines=Automating+the+boring+stuff...;Selenium+%2B+Java+%2B+TestNG;CI%2FCD+Pipeline+Expert;Docker+%26+Kubernetes;Infrastructure+as+Code" />
 </p>
 
 ---
@@ -27,7 +27,7 @@
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
   <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=white" />
 </p>
 
 ---
@@ -59,3 +59,5 @@
 ---
 
 <p align="center"><i>⭐ Thanks for stopping by — feel free to explore my repos!</i></p>
+
+<!-- AUTO-GENERATED README: Last updated 2026-10-09 05:20:36 UTC -->
