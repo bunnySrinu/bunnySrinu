@@ -9,10 +9,11 @@
 
 ### 🧭 About Me
 
-- 🔭 I'm currently building **test automation frameworks** using the Page Object Model pattern
-- ⚙️ Interested in **DevOps practices** — CI/CD pipelines, build automation, and infrastructure
-- 🌱 Always leveling up my skills in test automation and deployment workflows
-- 💬 Ask me about Selenium, TestNG, Maven, or Java-based test frameworks
+- 🔭 I'm currently building **automation and DevOps projects** around **bunnySrinu**
+- ⚙️ Interested in **CI/CD pipelines, test automation, infrastructure, and build automation**
+- 🌱 Always leveling up my skills in **Selenium, Java, Maven, Docker, and GitHub Actions**
+- 💬 Ask me about **test automation, QA engineering, and deployment workflows**
+- 🧑‍💻 GitHub bio: **QA / Test Automation Engineer · DevOps Enthusiast**
 - 📫 Reach me on [GitHub](https://github.com/bunnySrinu)
 
 ---
@@ -20,14 +21,10 @@
 ### 🛠️ Tech Stack
 
 <p align="left">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
-  <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" />
-  <img src="https://img.shields.io/badge/TestNG-EF2D5E?style=for-the-badge&logo=testinglibrary&logoColor=white" />
-  <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" />
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
-  <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=white" />
+  <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
 </p>
 
 ---
@@ -35,11 +32,14 @@
 ### 📌 Featured Projects
 
 <p align="left">
-  <a href="https://github.com/bunnySrinu/SeleniumAutomationPOM">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=bunnySrinu&repo=SeleniumAutomationPOM&theme=tokyonight" />
+  <a href="https://github.com/bunnySrinu/LearnJSTSPlaywrite4x">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=bunnySrinu&repo=LearnJSTSPlaywrite4x&theme=tokyonight" />
   </a>
   <a href="https://github.com/bunnySrinu/DevOps">
     <img src="https://github-readme-stats.vercel.app/api/pin/?username=bunnySrinu&repo=DevOps&theme=tokyonight" />
+  </a>
+  <a href="https://github.com/bunnySrinu/SeleniumAutomationPOM">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=bunnySrinu&repo=SeleniumAutomationPOM&theme=tokyonight" />
   </a>
 </p>
 
@@ -60,4 +60,4 @@
 
 <p align="center"><i>⭐ Thanks for stopping by — feel free to explore my repos!</i></p>
 
-<!-- AUTO-GENERATED README: Last updated 2026-10-09 05:20:36 UTC -->
+<!-- AUTO-GENERATED README: Last updated 2026-10-09 06:04:18 UTC -->
