@@ -1,98 +1,136 @@
 #!/usr/bin/env python3
-"""
-Auto-generate README.md from GitHub repositories.
-This script fetches your repos and dynamically creates a README with featured projects.
-"""
-
-import requests
 import os
+import requests
+from collections import Counter
 from datetime import datetime
 
-# Configuration
 GITHUB_USERNAME = "bunnySrinu"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 
-# Featured project repos (manually curated)
-FEATURED_REPOS = [
-    "SeleniumAutomationPOM",
-    "DevOps"
-]
+LANGUAGE_BADGES = {
+    "Java": ("Java", "ED8B00", "openjdk"),
+    "Python": ("Python", "3776AB", "python"),
+    "JavaScript": ("JavaScript", "F7DF1E", "javascript"),
+    "TypeScript": ("TypeScript", "3178C6", "typescript"),
+    "Dockerfile": ("Docker", "2496ED", "docker"),
+    "Shell": ("Shell", "4EAA25", "gnubash"),
+    "YAML": ("YAML", "CB171E", "yaml"),
+    "HTML": ("HTML", "E34F26", "html5"),
+    "CSS": ("CSS", "1572B6", "css3"),
+    "Bash": ("Bash", "4EAA25", "gnubash"),
+    "C#": ("CSharp", "239120", "csharp"),
+    "Go": ("Go", "00ADD8", "go"),
+    "Kotlin": ("Kotlin", "7F52FF", "kotlin"),
+    "Rust": ("Rust", "000000", "rust"),
+    "PHP": ("PHP", "777BB4", "php"),
+    "Ruby": ("Ruby", "CC342D", "ruby"),
+    "Groovy": ("Groovy", "4298B8", "apachegroovy"),
+    "PowerShell": ("PowerShell", "5391FE", "powershell"),
+}
 
-# Tech stack badges
-TECH_STACK = [
-    ("Java", "ED8B00", "openjdk"),
-    ("Selenium", "43B02A", "selenium"),
-    ("TestNG", "EF2D5E", "testinglibrary"),
-    ("Maven", "C71A36", "apachemaven"),
-    ("Git", "F05032", "git"),
-    ("Jenkins", "D24939", "jenkins"),
-    ("Docker", "2496ED", "docker"),
-    ("Linux", "FCC624", "linux"),
-]
-
-def get_github_repos():
-    """Fetch all repos for the user."""
-    headers = {}
+def get_headers():
+    headers = {"Accept": "application/vnd.github+json"}
     if GITHUB_TOKEN:
         headers["Authorization"] = f"token {GITHUB_TOKEN}"
-    
-    url = f"https://api.github.com/users/{GITHUB_USERNAME}/repos"
-    params = {
-        "sort": "stars",
-        "per_page": 100,
-        "type": "owner"
-    }
-    
-    try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching repos: {e}")
-        return []
+    return headers
 
-def get_repo_details(repo_name):
-    """Fetch specific repo details."""
-    headers = {}
-    if GITHUB_TOKEN:
-        headers["Authorization"] = f"token {GITHUB_TOKEN}"
-    
-    url = f"https://api.github.com/repos/{GITHUB_USERNAME}/{repo_name}"
-    
+def fetch_json(url, params=None):
     try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching repo {repo_name}: {e}")
-        return {}
+        resp = requests.get(url, headers=get_headers(), params=params)
+        resp.raise_for_status()
+        return resp.json()
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
+        return None
 
-def build_tech_stack_html():
-    """Build HTML for tech stack badges."""
+def get_user_profile():
+    return fetch_json(f"https://api.github.com/users/{GITHUB_USERNAME}") or {}
+
+def get_user_repos():
+    return fetch_json(
+        f"https://api.github.com/users/{GITHUB_USERNAME}/repos",
+        params={"sort": "updated", "per_page": 100, "type": "owner"}
+    ) or []
+
+def build_tech_stack_html(languages):
     html = "<p align=\"left\">\n"
-    for tech_name, color, logo in TECH_STACK:
-        html += f'  <img src="https://img.shields.io/badge/{tech_name}-{color}?style=for-the-badge&logo={logo}&logoColor=white" />\n'
+    if not languages:
+        languages = ["Java", "Python", "Docker", "Linux", "Git"]
+
+    for lang in languages[:8]:
+        badge = LANGUAGE_BADGES.get(lang, (lang, "2E4053", "github"))
+        name, color, logo = badge
+        html += f'  <img src="https://img.shields.io/badge/{name}-{color}?style=for-the-badge&logo={logo}&logoColor=white" />\n'
+
     html += "</p>"
     return html
 
-def build_featured_projects_html():
-    """Build HTML for featured projects with dynamic data."""
+def build_featured_projects_html(repos):
     html = "<p align=\"left\">\n"
-    
-    for repo_name in FEATURED_REPOS:
-        repo = get_repo_details(repo_name)
-        if repo:
-            html += f'  <a href="https://github.com/{GITHUB_USERNAME}/{repo_name}">\n'
-            html += f'    <img src="https://github-readme-stats.vercel.app/api/pin/?username={GITHUB_USERNAME}&repo={repo_name}&theme=tokyonight" />\n'
-            html += f'  </a>\n'
-    
+
+    featured = []
+    for repo in repos:
+        if repo.get("fork") or repo.get("archived"):
+            continue
+        if repo.get("name") in {"bunnySrinu", "bunnySrinu.github.io"}:
+            continue
+        featured.append(repo)
+
+    featured = sorted(featured, key=lambda r: (r.get("stargazers_count", 0), r.get("updated_at", "")), reverse=True)[:3]
+
+    for repo in featured:
+        name = repo["name"]
+        html += f'  <a href="https://github.com/{GITHUB_USERNAME}/{name}">\n'
+        html += f'    <img src="https://github-readme-stats.vercel.app/api/pin/?username={GITHUB_USERNAME}&repo={name}&theme=tokyonight" />\n'
+        html += "  </a>\n"
+
+    if not featured:
+        html += '  <a href="https://github.com/bunnySrinu">\n'
+        html += '    <img src="https://github-readme-stats.vercel.app/api/pin/?username=bunnySrinu&repo=bunnySrinu&theme=tokyonight" />\n'
+        html += "  </a>\n"
+
     html += "</p>"
     return html
+
+def build_about_me(profile, repos):
+    bio = profile.get("bio") or "QA / Test Automation Engineer · DevOps Enthusiast"
+    top_repo = ""
+    if repos:
+        for repo in repos:
+            if not repo.get("fork") and not repo.get("archived"):
+                top_repo = repo["name"]
+                break
+
+    if top_repo:
+        return f"""- 🔭 I'm currently building **automation and DevOps projects** around **{top_repo}**
+- ⚙️ Interested in **CI/CD pipelines, test automation, infrastructure, and build automation**
+- 🌱 Always leveling up my skills in **Selenium, Java, Maven, Docker, and GitHub Actions**
+- 💬 Ask me about **test automation, QA engineering, and deployment workflows**
+- 🧑‍💻 GitHub bio: **{bio}**
+- 📫 Reach me on [GitHub](https://github.com/{GITHUB_USERNAME})"""
+    else:
+        return f"""- 🔭 I'm currently building **automation and DevOps projects**
+- ⚙️ Interested in **CI/CD pipelines, test automation, infrastructure, and build automation**
+- 🌱 Always leveling up my skills in **Selenium, Java, Maven, Docker, and GitHub Actions**
+- 💬 Ask me about **test automation, QA engineering, and deployment workflows**
+- 🧑‍💻 GitHub bio: **{bio}**
+- 📫 Reach me on [GitHub](https://github.com/{GITHUB_USERNAME})"""
+
+def get_top_languages(repos):
+    counter = Counter()
+    for repo in repos:
+        name = repo.get("language")
+        if name:
+            counter[name] += 1
+    return [lang for lang, _ in counter.most_common(8)]
 
 def build_readme():
-    """Generate the complete README content."""
-    
-    readme = f"""<h1 align="center">Hi, I'm Srinivas 👋</h1>
+    profile = get_user_profile()
+    repos = get_user_repos()
+    top_languages = get_top_languages(repos)
+    about_me = build_about_me(profile, repos)
+
+    readme = f'''<h1 align="center">Hi, I'm Srinivas 👋</h1>
 <h3 align="center">QA / Test Automation Engineer · DevOps Enthusiast</h3>
 
 <p align="center">
@@ -103,23 +141,19 @@ def build_readme():
 
 ### 🧭 About Me
 
-- 🔭 I'm currently building **test automation frameworks** using the Page Object Model pattern
-- ⚙️ Interested in **DevOps practices** — CI/CD pipelines, build automation, and infrastructure
-- 🌱 Always leveling up my skills in test automation and deployment workflows
-- 💬 Ask me about Selenium, TestNG, Maven, or Java-based test frameworks
-- 📫 Reach me on [GitHub](https://github.com/{GITHUB_USERNAME})
+{about_me}
 
 ---
 
 ### 🛠️ Tech Stack
 
-{build_tech_stack_html()}
+{build_tech_stack_html(top_languages)}
 
 ---
 
 ### 📌 Featured Projects
 
-{build_featured_projects_html()}
+{build_featured_projects_html(repos)}
 
 ---
 
@@ -138,26 +172,16 @@ def build_readme():
 
 <p align="center"><i>⭐ Thanks for stopping by — feel free to explore my repos!</i></p>
 
-<!-- AUTO-GENERATED README: Last updated {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC -->
-"""
-    
+<!-- AUTO-GENERATED README: Last updated {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC -->
+'''
+
     return readme
 
-def save_readme(content):
-    """Save README.md to the repo root."""
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(content)
-    print("✅ README.md generated successfully!")
-
 def main():
-    """Main execution."""
-    print(f"🔄 Generating README for {GITHUB_USERNAME}...")
-    
-    # Generate and save README
     readme_content = build_readme()
-    save_readme(readme_content)
-    
-    print("✅ README update complete!")
+    with open("README.md", "w", encoding="utf-8") as f:
+        f.write(readme_content)
+    print("README generated successfully")
 
 if __name__ == "__main__":
     main()
