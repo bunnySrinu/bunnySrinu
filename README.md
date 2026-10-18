@@ -9,7 +9,7 @@
 
 ### 🧭 About Me
 
-- 🔭 I'm currently building **automation and DevOps projects** around **LearnJSTSPlaywrite4x**
+- 🔭 I'm currently building **automation and DevOps projects** around **bunnySrinu**
 - ⚙️ Interested in **CI/CD pipelines, test automation, infrastructure, and build automation**
 - 🌱 Always leveling up my skills in **Selenium, Java, Maven, Docker, and GitHub Actions**
 - 💬 Ask me about **test automation, QA engineering, and deployment workflows**
@@ -21,8 +21,8 @@
 ### 🛠️ Tech Stack
 
 <p align="left">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
 </p>
@@ -60,4 +60,4 @@
 
 <p align="center"><i>⭐ Thanks for stopping by — feel free to explore my repos!</i></p>
 
-<!-- AUTO-GENERATED README: Last updated 2026-10-17 06:19:11 UTC -->
+<!-- AUTO-GENERATED README: Last updated 2026-10-18 06:43:15 UTC -->
